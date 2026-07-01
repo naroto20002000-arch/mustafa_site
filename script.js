@@ -6,10 +6,10 @@ function showResult(choice) {
     const buttons = document.querySelector('.buttons');
     buttons.style.display = 'none';
     if (choice === 'yes') {
-        result.innerHTML = '<div><div class="emoji">🌸</div><div class="small">You gave Mustafa a flower.</div></div>';
+        result.innerHTML = '<div><div class="emoji">🌸</div><div class="small">لقد أعطيت علي وردة.</div></div>';
         confetti();
     } else {
-        result.innerHTML = '<div><div class="emoji">💩</div><div class="small">Oh no — you gave Mustafa that.</div></div>';
+        result.innerHTML = '<div><div class="emoji">💩</div><div class="small">يا للأسف — لقد أعطيت علي هذا.</div></div>';
     }
 }
 
