@@ -11,13 +11,13 @@ const menuItems = [
         id: 'dolma',
         name: 'الدولمة',
         description: 'خضار محشية بالأرز واللحم والبهارات، تقدم ساخنة ولذيذة.',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Dolma_1.jpg'
+        image: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Iraqi_Dolma.jpg'
     },
     {
         id: 'kebab',
         name: 'الكباب العراقي',
         description: 'كباب لحم مشوي مع خبز طازج وصلصة طماطم خاصة.',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Seekh_Kebab.jpg'
+        image: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Iraqi_Kebab.jpg'
     },
     {
         id: 'tashreeb',
