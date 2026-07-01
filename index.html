@@ -4,18 +4,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>علي — هل تحبني؟</title>
+    <title>قائمة الغداء العراقية</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
     <div class="container">
-        <h1>علي هل تحبني؟</h1>
-        <div class="buttons">
-            <button id="yesBtn">نعم أحبك</button>
-            <button id="noBtn">لا</button>
-        </div>
-        <div id="result" class="result" aria-live="polite"></div>
+        <h1>اختر وجبة الغداء العراقية</h1>
+        <p class="description">اختر من قائمة الوجبات العراقية الشهية ثم أرسل اختيارك إلى علي.</p>
+        <div class="menu-list" id="menuList"></div>
+        <label class="field-label" for="senderName">اسمك</label>
+        <input id="senderName" class="text-input" type="text" placeholder="اكتب اسمك هنا" />
+        <button id="submitBtn" class="submit-btn">إرسال الاختيار</button>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
     </div>
     <script src="script.js"></script>
 </body>
