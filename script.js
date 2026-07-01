@@ -1,36 +1,84 @@
-document.getElementById('yesBtn').addEventListener('click', () => showResult('yes'));
-document.getElementById('noBtn').addEventListener('click', () => showResult('no'));
+const EMAIL_RECIPIENT = 'naroto20002000@gmail.com';
+const menuItems = [
+    {
+        id: 'masgouf',
 
-function showResult(choice) {
-    const result = document.getElementById('result');
-    const buttons = document.querySelector('.buttons');
-    buttons.style.display = 'none';
-    if (choice === 'yes') {
-        result.innerHTML = '<div><div class="emoji">🌸</div><div class="small">لقد أعطيت علي وردة.</div></div>';
-        confetti();
-    } else {
-        result.innerHTML = '<div><div class="emoji">💩</div><div class="small">يا للأسف — لقد أعطيت علي هذا.</div></div>';
+        name: 'المسكوف',
+        description: 'سمك مشوي بنكهة عراقية تقليدية، ويعد من أشهر أطباق الغداء في العراق.',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/0/07/Masgouf.jpg'
+    },
+    {
+        id: 'dolma',
+        name: 'الدولمة',
+        description: 'خضار محشية بالأرز واللحم والبهارات، تقدم ساخنة ولذيذة.',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Dolma_1.jpg/800px-Dolma_1.jpg'
+    },
+    {
+        id: 'kebab',
+        name: 'الكباب العراقي',
+        description: 'كباب لحم مشوي مع خبز طازج وصلصة طماطم خاصة.',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Seekh_Kebab.jpg/800px-Seekh_Kebab.jpg'
+    },
+    {
+        id: 'fatet_basra',
+        name: 'فتة بصرية',
+        description: 'فتة لحم بقر مع خبز محمص وصلصة طيبة من جنوب العراق.',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Baghdad_fatteh.jpg/800px-Baghdad_fatteh.jpg'
     }
+];
+
+const menuList = document.getElementById('menuList');
+const sendButton = document.getElementById('submitBtn');
+const feedback = document.getElementById('feedback');
+const senderName = document.getElementById('senderName');
+let selectedId = null;
+
+function renderMenu() {
+    menuItems.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'menu-card';
+        card.innerHTML = `
+            <label for="${item.id}">
+                <img src="${item.image}" alt="${item.name}" />
+                <div class="card-content">
+                    <h2>${item.name}</h2>
+                    <p>${item.description}</p>
+                </div>
+            </label>
+            <input type="radio" id="${item.id}" name="menu" value="${item.id}" />
+        `;
+        menuList.appendChild(card);
+
+        const radio = card.querySelector('input');
+        radio.addEventListener('change', () => selectItem(item.id, card));
+        card.addEventListener('click', () => {
+            radio.checked = true;
+            selectItem(item.id, card);
+        });
+    });
 }
 
-function confetti() {
-    const colors = ['🎉', '✨', '🥳', '🎊'];
-    const stage = document.createElement('div');
-    stage.className = 'confetti';
-    document.body.appendChild(stage);
-    for (let i = 0; i < 18; i++) {
-        const el = document.createElement('span');
-        el.textContent = colors[Math.floor(Math.random() * colors.length)];
-        el.style.position = 'absolute';
-        el.style.left = Math.random() * 100 + '%';
-        el.style.top = '-10%';
-        el.style.fontSize = (12 + Math.random() * 36) + 'px';
-        stage.appendChild(el);
-        el.animate([
-            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-            { transform: 'translateY(' + (200 + Math.random() * 300) + 'px) rotate(' + (Math.random() * 360) + 'deg)', opacity: 0 }
-        ], { duration: 1400 + Math.random() * 1000, easing: 'ease-out' });
-        setTimeout(() => el.remove(), 2300);
-    }
-    setTimeout(() => stage.remove(), 2500);
+function selectItem(id, card) {
+    selectedId = id;
+    document.querySelectorAll('.menu-card').forEach(cardElement => {
+        cardElement.classList.toggle('selected', cardElement === card);
+    });
+    feedback.textContent = 'اخترت: ' + menuItems.find(item => item.id === id).name;
 }
+
+function submitChoice() {
+    if (!selectedId) {
+        feedback.textContent = 'من فضلك اختر وجبة من القائمة أولاً.';
+        return;
+    }
+    const name = senderName.value.trim() || 'زائر مجهول';
+    const item = menuItems.find(menu => menu.id === selectedId);
+    const subject = encodeURIComponent('اختيار وجبة الغداء العراقية');
+    const body = encodeURIComponent(`الاسم: ${name}\nالاختيار: ${item.name}\nالطبق: ${item.description}`);
+    const mailto = `mailto:${EMAIL_RECIPIENT}?subject=${subject}&body=${body}`;
+    feedback.innerHTML = `تم تجهيز اختيارك: <strong>${item.name}</strong>. اضغط على الزر التالي لإرسال بريد إلى علي.`;
+    feedback.innerHTML += ` <a href="${mailto}" target="_blank" rel="noopener">إرسال إلى علي</a>`;
+}
+
+renderMenu();
+sendButton.addEventListener('click', submitChoice);
