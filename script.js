@@ -11,19 +11,19 @@ const menuItems = [
         id: 'dolma',
         name: 'الدولمة',
         description: 'خضار محشية بالأرز واللحم والبهارات، تقدم ساخنة ولذيذة.',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Dolma_1.jpg/800px-Dolma_1.jpg'
+        image: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Dolma_1.jpg'
     },
     {
         id: 'kebab',
         name: 'الكباب العراقي',
         description: 'كباب لحم مشوي مع خبز طازج وصلصة طماطم خاصة.',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Seekh_Kebab.jpg/800px-Seekh_Kebab.jpg'
+        image: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Seekh_Kebab.jpg'
     },
     {
-        id: 'fatet_basra',
-        name: 'فتة بصرية',
-        description: 'فتة لحم بقر مع خبز محمص وصلصة طيبة من جنوب العراق.',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Baghdad_fatteh.jpg/800px-Baghdad_fatteh.jpg'
+        id: 'tashreeb',
+        name: 'تشريب',
+        description: 'تشريب عراقي تقليدي من خبز التنور المغموس بمرقة لحم الغنم الغنية والتوابل.',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/f/f6/Red_Iraqi_Tashrib.jpg'
     }
 ];
 
@@ -81,7 +81,7 @@ function submitChoice() {
     const subject = encodeURIComponent('اختيار وجبة الغداء العراقية');
     const body = encodeURIComponent(`الاسم: ${name}\nالاختيار: ${item.name}\nالطبق: ${item.description}`);
     const mailto = `mailto:${EMAIL_RECIPIENT}?subject=${subject}&body=${body}`;
-    feedback.innerHTML = `تم تجهيز اختيارك: <strong>${item.name}</strong>. سيتم فتح البريد الآن لإرساله إلى علي.`;
+    feedback.innerHTML = `تم تجهيز اختيارك: <strong>${item.name}</strong>. سيتم فتح بريدك الإلكتروني لإرسال الطلب.`;
     window.location.href = mailto;
 }
 
