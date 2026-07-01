@@ -31,6 +31,7 @@ const menuList = document.getElementById('menuList');
 const sendButton = document.getElementById('submitBtn');
 const feedback = document.getElementById('feedback');
 const senderName = document.getElementById('senderName');
+const selectedSummary = document.getElementById('selectedSummary');
 let selectedId = null;
 
 function renderMenu() {
@@ -51,19 +52,23 @@ function renderMenu() {
 
         const radio = card.querySelector('input');
         radio.addEventListener('change', () => selectItem(item.id, card));
-        card.addEventListener('click', () => {
-            radio.checked = true;
-            selectItem(item.id, card);
+        card.addEventListener('click', event => {
+            if (event.target.tagName.toLowerCase() !== 'a') {
+                radio.checked = true;
+                selectItem(item.id, card);
+            }
         });
     });
 }
 
 function selectItem(id, card) {
     selectedId = id;
+    const item = menuItems.find(menu => menu.id === id);
+    selectedSummary.textContent = `الاختيار الحالي: ${item.name}`;
+    feedback.textContent = '';
     document.querySelectorAll('.menu-card').forEach(cardElement => {
         cardElement.classList.toggle('selected', cardElement === card);
     });
-    feedback.textContent = 'اخترت: ' + menuItems.find(item => item.id === id).name;
 }
 
 function submitChoice() {
@@ -76,8 +81,8 @@ function submitChoice() {
     const subject = encodeURIComponent('اختيار وجبة الغداء العراقية');
     const body = encodeURIComponent(`الاسم: ${name}\nالاختيار: ${item.name}\nالطبق: ${item.description}`);
     const mailto = `mailto:${EMAIL_RECIPIENT}?subject=${subject}&body=${body}`;
-    feedback.innerHTML = `تم تجهيز اختيارك: <strong>${item.name}</strong>. اضغط على الزر التالي لإرسال بريد إلى علي.`;
-    feedback.innerHTML += ` <a href="${mailto}" target="_blank" rel="noopener">إرسال إلى علي</a>`;
+    feedback.innerHTML = `تم تجهيز اختيارك: <strong>${item.name}</strong>. سيتم فتح البريد الآن لإرساله إلى علي.`;
+    window.location.href = mailto;
 }
 
 renderMenu();
